@@ -1,4 +1,5 @@
 import App from './App';
 import CustomInput from './Input';
+import CustomButton from './Button';
 
-export { App, CustomInput };
+export { App, CustomInput, CustomButton };
