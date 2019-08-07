@@ -1,3 +1,4 @@
 import App from './App';
+import CustomInput from './Input';
 
-export { App };
+export { App, CustomInput };
