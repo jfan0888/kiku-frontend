@@ -1,0 +1,58 @@
+html,
+body,
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', serif;
+}
+
+html,
+body {
+  height: 100%;
+  background: #e5e5e5;
+}
+
+.position-relative {
+  position: relative !important;
+}
+
+.position-absolute {
+  position: absolute !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.justify-center {
+  justify-content: center !important;
+}
+
+.center-block {
+  float: none;
+}
+
+.bold-script {
+  font-weight: bold;
+}
+
+.italic-script {
+  font-style: italic;
+}
+
+.text-center-align {
+  text-align: center;
+}
+
+.text-left-align {
+  text-align: left;
+}
+
+.text-right-align {
+  text-align: right;
+}
