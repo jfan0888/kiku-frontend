@@ -1,1 +1,33 @@
-node_modules
+# Include your project-specific ignores in this file
+# See https://help.github.com/ignore-files/ for more about ignoring files
+
+# Build output
+build/
+
+# Dependencies
+node_modules/
+
+# Testing
+coverage/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# VS Code
+.vscode/*
+!.vscode/snippets
+!.vscode/launch.json
+!.vscode/settings.json
+
+# Misc
+.DS_Store
+.env
+.env.local
+.env.*.local
+.eslintcache
+.yarn-integrity
+
+package-lock.json
+yarn.lock
