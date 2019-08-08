@@ -1,0 +1,32 @@
+.header-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 125px;
+
+  .page-title {
+    display: flex;
+    align-items: flex-start;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    color: white;
+    margin-right: 27px;
+    margin-bottom: 17px;
+    text-transform: uppercase;
+
+    .play-icon {
+      max-width: 30px;
+      margin-left: 5px;
+    }
+
+    .status-text {
+      top: 24px;
+      right: 0;
+      font-size: 12px;
+      font-weight: 500;
+      color: #db4406;
+      text-transform: capitalize;
+    }
+  }
+}
