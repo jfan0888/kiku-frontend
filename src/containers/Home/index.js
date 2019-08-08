@@ -19,7 +19,7 @@ class Home extends React.Component {
           <div className="page-title">Music that Moves</div>
         </div>
         <div className="page-content">
-          <div className="input-form-wrapper">
+          <form className="input-form-wrapper">
             <CustomInput
               className="home-input-item"
               type="text"
@@ -46,12 +46,12 @@ class Home extends React.Component {
               placeholder="Confirm Password"
             />
             <CustomButton title="create account" />
-          </div>
+          </form>
         </div>
         <footer>
           <div className="footer-text">
             Already Have An Account?
-            <Link className="text-link" to="/login">
+            <Link className="text-link" to="/my-profile">
               Login
             </Link>
           </div>
