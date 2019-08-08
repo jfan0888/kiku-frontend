@@ -1,5 +1,11 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const path = require('path');
+
 module.exports = {
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
+  },
   module: {
     rules: [
       {
@@ -26,6 +32,9 @@ module.exports = {
         use: ['file-loader'],
       },
     ],
+  },
+  devServer: {
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebPackPlugin({
