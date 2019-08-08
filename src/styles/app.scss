@@ -1,7 +1,19 @@
 @import './base.scss';
+@import './responsive.scss';
 
 .app-container {
   height: 100vh;
+}
+
+.page-width {
+  max-width: 365px;
+  margin: auto;
+}
+
+.page-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .text-link {
