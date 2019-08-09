@@ -1,10 +1,17 @@
-import { Home, Profile, Ideas, InProgress, Complete, Song } from './containers';
+import {
+  SignIn,
+  Profile,
+  Ideas,
+  InProgress,
+  Complete,
+  Song,
+} from './containers';
 
 const Routes = [
   {
-    title: 'home',
+    title: 'signin',
     pageLink: '/',
-    component: Home,
+    component: SignIn,
   },
   {
     title: 'profile',
@@ -48,7 +55,7 @@ const Routes = [
   {
     title: 'log out',
     pageLink: '/',
-    component: Home,
+    component: SignIn,
     bottomNavItem: true,
   },
 ];
