@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 
 import './styles.scss';
 
-const CustomButton = ({ title }) => (
-  <button className="custom-button">{title}</button>
+const CustomButton = ({ title, clickHandler }) => (
+  <button className="btn register" onClick={clickHandler}>
+    {title}
+  </button>
 );
 
 CustomButton.propTypes = {
