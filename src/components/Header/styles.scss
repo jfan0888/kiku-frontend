@@ -2,7 +2,11 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  height: 125px;
+  height: 100px;
+
+  .header-logo {
+    width: 103px;
+  }
 
   .page-title {
     display: flex;
