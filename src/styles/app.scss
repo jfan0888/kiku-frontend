@@ -1,5 +1,10 @@
+@import './fonts.scss';
 @import './base.scss';
 @import './responsive.scss';
+
+@include printRedHatFont(400, 'Regular', $familyName: 'RedHatText');
+@include printRedHatFont(500, 'Medium', $familyName: 'RedHatText');
+@include printRedHatFont(700, 'Bold', $familyName: 'RedHatText');
 
 .app-container {
   height: 100vh;
@@ -21,4 +26,5 @@
   font-weight: bold;
   margin-left: 5px;
   text-decoration: none;
+  cursor: pointer;
 }
