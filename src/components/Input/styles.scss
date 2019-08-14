@@ -8,6 +8,7 @@
   border-radius: 5px;
   outline: none;
   position: relative;
+  min-width: 260px;
 
   .placeholder-image {
     max-width: 37px;
@@ -24,6 +25,7 @@
     font-size: 19px;
     color: #6a6565;
     padding: 9px 25px 9px 7px;
+    width: 100%;
 
     &:focus {
       outline: none;
