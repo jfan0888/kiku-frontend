@@ -11,6 +11,7 @@ const AddableList = ({
   title,
   readOnly,
   clickHandler,
+  children,
   data,
   coWriter,
   visibleList,
@@ -55,6 +56,7 @@ const AddableList = ({
           )}
         </ul>
       ) : null}
+      {children}
     </div>
 
     {coWriter && visibleList && (
