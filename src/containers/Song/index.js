@@ -7,6 +7,8 @@ import { getSongById, updateSong } from '../../actions';
 import { GeneralView, AddableList, ProgressButton } from '../../components';
 import { coWriterData } from '../../mock-data';
 
+import NewLyric from './NewLyric';
+import ChatWidget from './ChatWidget';
 import './styles.scss';
 
 class Song extends React.Component {
@@ -19,6 +21,8 @@ class Song extends React.Component {
       fileFieldValue: '',
       visibleSearchInput: false,
       inReview: false,
+      addingLyrics: false,
+      sharable: false,
     };
     this.fileUploadRef = React.createRef();
     this.node = React.createRef();
@@ -49,7 +53,7 @@ class Song extends React.Component {
         this.setState({ btnText: 'complete' });
         break;
       case 'completed':
-        this.setState({ btnText: 'share', inReview: false });
+        this.setState({ btnText: 'share', inReview: true });
         break;
       default:
         break;
@@ -87,6 +91,18 @@ class Song extends React.Component {
     this.setState({ fileType: '' });
   };
 
+  updateLyrics = lyricsText => {
+    if (lyricsText.length) {
+      const { currentSong } = this.state;
+      const newSong = currentSong;
+
+      newSong.lyrics.push(lyricsText);
+
+      this.props.updateSong(1, newSong);
+    }
+    this.setState({ addingLyrics: false });
+  };
+
   addSongCoWriter = newWriter => {
     const { currentSong } = this.state;
     const newSong = currentSong;
@@ -103,8 +119,14 @@ class Song extends React.Component {
 
   onClickMove = () => {
     const { history } = this.props;
+    const { inReview } = this.state;
     const { location } = history;
     const { statusText, item } = location.state;
+
+    if (inReview) {
+      this.setState({ sharable: true });
+      return;
+    }
 
     switch (statusText) {
       case 'idea':
@@ -131,6 +153,7 @@ class Song extends React.Component {
       statusText: 'in progress',
       hasMusic: true,
     });
+    this.setState({ inReview: false });
   };
 
   setVisibleSearchableInput = () => {
@@ -148,8 +171,10 @@ class Song extends React.Component {
       btnText,
       inReview,
       currentSong,
+      addingLyrics,
       fileFieldValue,
       visibleSearchInput,
+      sharable,
     } = this.state;
 
     return (
@@ -158,63 +183,80 @@ class Song extends React.Component {
         statusText={statusText}
         hasMusic={hasMusic}
       >
-        {currentSong ? (
-          <>
-            <AddableList
-              readOnly={inReview}
-              title="archive"
-              clickHandler={() => this.uploadFile('archive')}
-              data={currentSong.archive}
-            />
-            <AddableList
-              readOnly={inReview}
-              title="lyrics"
-              clickHandler={() => this.uploadFile('lyric')}
-              data={currentSong.lyrics}
-            />
-            <div className="lyrics-list">Add Some Lyrics</div>
-            <AddableList
-              readOnly={inReview}
-              coWriter
-              title={
-                statusText === 'completed' ? 'co-writers' : 'add a co-writer'
-              }
-              visibleList={visibleSearchInput}
-              clickHandler={this.setVisibleSearchableInput}
-              listData={coWriterData}
-              closeInput={this.closeSearchableInput}
-              data={currentSong.coWriters}
-              handleAddWriter={this.addSongCoWriter}
-            />
-            {!inReview && (
-              <div className="progress-button-wrapper">
-                {statusText === 'completed' && (
-                  <ProgressButton
-                    backButton
-                    title={`move to in progress`}
-                    nextStepHandler={this.moveInProgress}
-                  />
-                )}
-                <ProgressButton
-                  sharable={statusText === 'completed'}
+        <div className="page-content flex-column">
+          {currentSong ? (
+            addingLyrics ? (
+              <NewLyric updateLyrics={this.updateLyrics} />
+            ) : (
+              <>
+                <AddableList
+                  readOnly={inReview}
+                  coWriter
                   title={
                     statusText === 'completed'
-                      ? 'request to share'
-                      : `move to ${btnText}`
+                      ? 'co-writers'
+                      : 'add a co-writer'
                   }
-                  nextStepHandler={this.onClickMove}
+                  visibleList={visibleSearchInput}
+                  clickHandler={this.setVisibleSearchableInput}
+                  listData={coWriterData}
+                  closeInput={this.closeSearchableInput}
+                  data={currentSong.coWriters}
+                  handleAddWriter={this.addSongCoWriter}
                 />
-              </div>
-            )}
-            <input
-              ref={input => (this.fileUploadRef = input)}
-              type="file"
-              style={{ display: 'none' }}
-              onChange={this.handleFileUpload}
-              value={fileFieldValue}
-            />
-          </>
-        ) : null}
+                <AddableList
+                  readOnly={inReview}
+                  title="archive"
+                  clickHandler={() => this.uploadFile('archive')}
+                  data={currentSong.archive}
+                />
+                {statusText !== 'idea' && !sharable && <ChatWidget />}
+                <AddableList
+                  readOnly={inReview}
+                  title="lyrics"
+                  clickHandler={() => this.uploadFile('lyric')}
+                  data={currentSong.lyrics}
+                />
+                {!inReview && (
+                  <div
+                    className="input-widget"
+                    onClick={() => this.setState({ addingLyrics: true })}
+                  >
+                    Add Some Lyrics
+                  </div>
+                )}
+                {!sharable && (
+                  <div className="progress-button-wrapper">
+                    {statusText === 'completed' && (
+                      <ProgressButton
+                        backButton
+                        title={`move to in progress`}
+                        nextStepHandler={this.moveInProgress}
+                      />
+                    )}
+                    <ProgressButton
+                      sharable={statusText === 'completed'}
+                      title={
+                        statusText === 'completed'
+                          ? 'request to share'
+                          : `move to ${btnText}`
+                      }
+                      nextStepHandler={this.onClickMove}
+                    />
+                  </div>
+                )}
+
+                <input
+                  ref={input => (this.fileUploadRef = input)}
+                  type="file"
+                  style={{ display: 'none' }}
+                  onChange={this.handleFileUpload}
+                  value={fileFieldValue}
+                />
+              </>
+            )
+          ) : null}
+        </div>
       </GeneralView>
     );
   }
