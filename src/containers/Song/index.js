@@ -4,8 +4,9 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
 import { getSongById, updateSong } from '../../actions';
-
 import { GeneralView, AddableList, ProgressButton } from '../../components';
+import { coWriterData } from '../../mock-data';
+
 import './styles.scss';
 
 class Song extends React.Component {
@@ -16,8 +17,11 @@ class Song extends React.Component {
       fileType: '',
       currentSong: null,
       fileFieldValue: '',
+      visibleSearchInput: false,
+      inReview: false,
     };
     this.fileUploadRef = React.createRef();
+    this.node = React.createRef();
   }
 
   componentDidMount() {
@@ -45,7 +49,7 @@ class Song extends React.Component {
         this.setState({ btnText: 'complete' });
         break;
       case 'completed':
-        this.setState({ btnText: 'share' });
+        this.setState({ btnText: 'share', inReview: false });
         break;
       default:
         break;
@@ -83,6 +87,15 @@ class Song extends React.Component {
     this.setState({ fileType: '' });
   };
 
+  addSongCoWriter = newWriter => {
+    const { currentSong } = this.state;
+    const newSong = currentSong;
+
+    newSong.coWriters.push(newWriter);
+    this.props.updateSong(1, newSong);
+    this.setState({ visibleSearchInput: false });
+  };
+
   uploadFile = fileType => {
     this.setState({ fileType });
     this.fileUploadRef.click();
@@ -101,8 +114,8 @@ class Song extends React.Component {
         history.push(`/completed/${item.id}`, {
           item,
           statusText: 'completed',
+          hasMusic: true,
         });
-        break;
       default:
         break;
     }
@@ -116,17 +129,28 @@ class Song extends React.Component {
     history.push(`/in-progress/${item.id}`, {
       item,
       statusText: 'in progress',
+      hasMusic: true,
     });
   };
 
-  addCoWiter = () => {
-    //
+  setVisibleSearchableInput = () => {
+    this.setState({ visibleSearchInput: true });
+  };
+
+  closeSearchableInput = () => {
+    this.setState({ visibleSearchInput: false });
   };
 
   render() {
     const { location } = this.props.history;
     const { statusText, item, hasMusic } = location.state;
-    const { btnText, currentSong, fileFieldValue } = this.state;
+    const {
+      btnText,
+      inReview,
+      currentSong,
+      fileFieldValue,
+      visibleSearchInput,
+    } = this.state;
 
     return (
       <GeneralView
@@ -137,33 +161,51 @@ class Song extends React.Component {
         {currentSong ? (
           <>
             <AddableList
+              readOnly={inReview}
               title="archive"
               clickHandler={() => this.uploadFile('archive')}
               data={currentSong.archive}
             />
             <AddableList
+              readOnly={inReview}
               title="lyrics"
               clickHandler={() => this.uploadFile('lyric')}
               data={currentSong.lyrics}
             />
             <div className="lyrics-list">Add Some Lyrics</div>
             <AddableList
-              title="add a co-writer"
-              clickHandler={this.addCoWiter}
+              readOnly={inReview}
+              coWriter
+              title={
+                statusText === 'completed' ? 'co-writers' : 'add a co-writer'
+              }
+              visibleList={visibleSearchInput}
+              clickHandler={this.setVisibleSearchableInput}
+              listData={coWriterData}
+              closeInput={this.closeSearchableInput}
+              data={currentSong.coWriters}
+              handleAddWriter={this.addSongCoWriter}
             />
-            <div className="progress-button-wrapper">
-              {statusText === 'completed' && (
+            {!inReview && (
+              <div className="progress-button-wrapper">
+                {statusText === 'completed' && (
+                  <ProgressButton
+                    backButton
+                    title={`move to in progress`}
+                    nextStepHandler={this.moveInProgress}
+                  />
+                )}
                 <ProgressButton
-                  backButton
-                  title={`move to in progress`}
-                  nextStepHandler={this.moveInProgress}
+                  sharable={statusText === 'completed'}
+                  title={
+                    statusText === 'completed'
+                      ? 'request to share'
+                      : `move to ${btnText}`
+                  }
+                  nextStepHandler={this.onClickMove}
                 />
-              )}
-              <ProgressButton
-                title={`move to ${btnText}`}
-                nextStepHandler={this.onClickMove}
-              />
-            </div>
+              </div>
+            )}
             <input
               ref={input => (this.fileUploadRef = input)}
               type="file"
