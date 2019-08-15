@@ -1,10 +1,60 @@
-.lyrics-list {
+.input-widget {
   min-height: 100px;
   border-radius: 5px;
   background: white;
   padding: 9px 7px;
   color: black;
   margin: 0 32px 10px;
+  display: flex;
+  flex-direction: column;
+
+  &.empty {
+    height: calc(100vh - 250px);
+    min-height: unset;
+    overflow: hidden;
+  }
+
+  textarea {
+    resize: none;
+    flex: 1;
+    margin: 5px;
+    padding: 5px 10px;
+  }
+
+  .add-btn {
+    width: 20px;
+    display: flex;
+    align-items: center;
+    margin-right: -5px;
+    margin-top: -5px;
+    margin-left: auto;
+
+    &:active {
+      opacity: 0.7;
+    }
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  .messege-list {
+    .rce-mbox {
+      background: #3dccd6;
+
+      svg {
+        fill: #3dccd6;
+      }
+
+      &.rce-mbox-right {
+        background: #fa693b;
+
+        svg {
+          fill: #fa693b;
+        }
+      }
+    }
+  }
 }
 
 .progress-button-wrapper {
