@@ -27,6 +27,12 @@
     border: none;
     text-align: left;
     margin-bottom: 10px;
+
+    &.back {
+      background: white;
+      color: black;
+      padding: 3px 10px;
+    }
   }
 
   .forward-icon {
