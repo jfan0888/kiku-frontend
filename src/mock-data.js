@@ -44,4 +44,17 @@ const songsData = [
   },
 ];
 
-export { ideasData, songsData };
+const coWriterData = [
+  {
+    id: 1,
+    name: 'Mike Willis',
+    imageUrl: require('./assets/users/user-01.png'),
+  },
+  {
+    id: 2,
+    name: 'Karl Dev',
+    imageUrl: require('./assets/users/user-01.png'),
+  },
+];
+
+export { ideasData, songsData, coWriterData };
