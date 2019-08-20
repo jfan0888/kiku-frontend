@@ -16,6 +16,7 @@ const initialState = {
     lyrics: [],
     coWriters: [],
     status: null,
+    audioUrl: 'https://okazari.github.io/Rythm.js/samples/rythmC.mp3',
   },
 };
 
