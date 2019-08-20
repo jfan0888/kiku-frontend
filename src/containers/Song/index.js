@@ -175,6 +175,7 @@ class Song extends React.Component {
       fileFieldValue,
       visibleSearchInput,
       sharable,
+      fileType,
     } = this.state;
 
     return (
@@ -182,6 +183,7 @@ class Song extends React.Component {
         title={item.title}
         statusText={statusText}
         hasMusic={hasMusic}
+        audioUrl={hasMusic && currentSong && currentSong.audioUrl}
       >
         <div className="page-content flex-column">
           {currentSong ? (
@@ -249,6 +251,7 @@ class Song extends React.Component {
                 <input
                   ref={input => (this.fileUploadRef = input)}
                   type="file"
+                  accept={fileType === 'archive' ? '.doc' : 'audio/*'}
                   style={{ display: 'none' }}
                   onChange={this.handleFileUpload}
                   value={fileFieldValue}
