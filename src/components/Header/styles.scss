@@ -19,9 +19,13 @@
     margin-bottom: 17px;
     text-transform: uppercase;
 
-    .play-icon {
-      max-width: 30px;
-      margin-left: 5px;
+    .play-button {
+      cursor: pointer;
+
+      .play-icon {
+        max-width: 30px;
+        margin-left: 5px;
+      }
     }
 
     .status-text {
