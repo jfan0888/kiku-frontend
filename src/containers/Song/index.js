@@ -133,7 +133,7 @@ class Song extends React.Component {
         this.moveInProgress();
         break;
       case 'in progress':
-        history.push(`/completed/${item.id}`, {
+        history.push(`${process.env.PUBLIC_URL}/completed/${item.id}`, {
           item,
           statusText: 'completed',
           hasMusic: true,
@@ -148,7 +148,7 @@ class Song extends React.Component {
     const { location } = history;
     const { item } = location.state;
 
-    history.push(`/in-progress/${item.id}`, {
+    history.push(`${process.env.PUBLIC_URL}/in-progress/${item.id}`, {
       item,
       statusText: 'in progress',
       hasMusic: true,

@@ -3,9 +3,8 @@ import ReactTooltip from 'react-tooltip';
 import PropTypes from 'prop-types';
 
 import SearchInput from './SearchInput';
-
-const addIcon = require('../../assets/images/add.png');
 import './styles.scss';
+const addIcon = require('../../assets/images/add.png');
 
 const AddableList = ({
   title,

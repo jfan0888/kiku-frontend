@@ -42,7 +42,7 @@ class Header extends React.Component {
 
     return (
       <div className="header-container">
-        <Link to="/">
+        <Link to={`${process.env.PUBLIC_URL}`}>
           <img alt="logo" src={logoIcon} className="header-logo" />
         </Link>
         <div className="page-title">

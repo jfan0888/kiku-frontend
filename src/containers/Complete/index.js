@@ -22,7 +22,7 @@ class Complete extends React.Component {
               key={item.title}
               title={item.title}
               clickHandler={() =>
-                history.push(`/completed/${item.id}`, {
+                history.push(`${process.env.PUBLIC_URL}/completed/${item.id}`, {
                   item,
                   hasMusic: true,
                   statusText: 'completed',

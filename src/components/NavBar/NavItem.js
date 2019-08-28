@@ -34,7 +34,10 @@ const NavItemIcon = ({ title }) => {
 };
 
 const NavItem = ({ title, pageLink }) => (
-  <Link className="bottom-navbar--nav-item" to={pageLink}>
+  <Link
+    className="bottom-navbar--nav-item"
+    to={`${process.env.PUBLIC_URL}${pageLink}`}
+  >
     <NavItemIcon title={title} />
     <span className="nav-item-text">{title}</span>
   </Link>

@@ -22,7 +22,10 @@ class Ideas extends React.Component {
               key={item.title}
               title={item.title}
               clickHandler={() =>
-                history.push(`/ideas/${item.id}`, { item, statusText: 'idea' })
+                history.push(`${process.env.PUBLIC_URL}/ideas/${item.id}`, {
+                  item,
+                  statusText: 'idea',
+                })
               }
             />
           ))}

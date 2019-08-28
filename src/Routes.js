@@ -26,7 +26,7 @@ const Routes = [
     bottomNavItem: true,
   },
   {
-    title: '',
+    title: 'idea detail',
     pageLink: '/ideas/:songId',
     component: Song,
   },
@@ -37,7 +37,7 @@ const Routes = [
     bottomNavItem: true,
   },
   {
-    title: '',
+    title: 'in progress detail',
     pageLink: '/in-progress/:songId',
     component: Song,
   },
@@ -48,7 +48,7 @@ const Routes = [
     bottomNavItem: true,
   },
   {
-    title: '',
+    title: 'completed detail',
     pageLink: '/completed/:songId',
     component: Song,
   },

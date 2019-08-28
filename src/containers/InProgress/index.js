@@ -22,11 +22,14 @@ class InProgress extends React.Component {
               key={item.title}
               title={item.title}
               clickHandler={() =>
-                history.push(`/in-progress/${item.id}`, {
-                  item,
-                  statusText: 'in progress',
-                  hasMusic: true,
-                })
+                history.push(
+                  `${process.env.PUBLIC_URL}/in-progress/${item.id}`,
+                  {
+                    item,
+                    statusText: 'in progress',
+                    hasMusic: true,
+                  }
+                )
               }
             />
           ))}
