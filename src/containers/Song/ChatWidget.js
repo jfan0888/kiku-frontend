@@ -1,4 +1,5 @@
 import React from 'react';
+import renderHTML from 'react-render-html';
 import { MessageList } from 'react-chat-elements';
 
 import 'react-chat-elements/dist/main.css';
@@ -10,6 +11,8 @@ class ChatWidget extends React.Component {
   }
 
   render() {
+    const { content } = this.props;
+
     return (
       <div className="input-widget">
         <a className="add-btn">

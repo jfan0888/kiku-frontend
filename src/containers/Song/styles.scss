@@ -1,3 +1,7 @@
+@import './admin.css';
+@import './main.css';
+@import './messenger.css';
+
 .input-widget {
   min-height: 100px;
   border-radius: 5px;
@@ -59,4 +63,30 @@
 
 .progress-button-wrapper {
   margin: 0 32px;
+}
+
+.error-dialog-container {
+  width: 300px;
+  height: 50px;
+  background: #df3900;
+  border-radius: 10px;
+  position: relative;
+  margin-left: auto;
+  padding: 10px 5px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+
+  .close-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    padding: 3px;
+    text-decoration: none;
+    cursor: pointer;
+    color: white;
+  }
+
+  .content {
+    color: white;
+  }
 }
