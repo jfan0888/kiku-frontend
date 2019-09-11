@@ -1,6 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import ContentEditable from 'react-contenteditable'
+
+import {
+  selectLot,
+} from '../../redux/reducers/actions';
 
 import './styles.scss';
 
@@ -13,14 +19,17 @@ class Header extends React.Component {
     this.state = {
       play: false,
       stop: true,
+      html: ""
     };
+    this.contentEditable = React.createRef();
     this.audio = null;
   }
 
   componentDidMount() {
-    const { audioUrl } = this.props;
+    const { audioUrl, title } = this.props;
 
     this.audio = new Audio(audioUrl);
+    this.setState({ html: title })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,8 +46,16 @@ class Header extends React.Component {
     });
   };
 
+  handleChange = evt => {
+    const { currentLot } = this.props;
+
+    this.setState({ html: evt.target.value });
+    this.props.onUpdate(currentLot, evt.target.value);
+  };
+
   render() {
-    const { title, hasMusic, statusText } = this.props;
+    const { hasMusic, statusText, title } = this.props;
+    const { html } = this.state;
 
     return (
       <div className="header-container">
@@ -46,16 +63,23 @@ class Header extends React.Component {
           <img alt="logo" src={logoIcon} className="header-logo" />
         </Link>
         <div className="page-title">
-          <span className="position-relative">
-            {title}
-            {statusText !== '' && (
-              <span className="status-text position-absolute">{`- ${statusText}`}</span>
+          <div className={title === '' ? 'main empty-title' : 'main'}>
+            <ContentEditable
+              innerRef={this.contentEditable}
+              className="header-editable-title"
+              html={html} // innerHTML of the editable div
+              disabled={false}       // use true to disable editing
+              onChange={this.handleChange} // handle innerHTML change
+              tagName='article' // Use a custom HTML tag (uses a div by default)
+            />
+            {hasMusic && this.audio && (
+              <a className="play-button" onClick={this.togglePlay}>
+                <img alt="play icon" src={playIcon} className="play-icon" />
+              </a>
             )}
-          </span>
-          {hasMusic && this.audio && (
-            <a className="play-button" onClick={this.togglePlay}>
-              <img alt="play icon" src={playIcon} className="play-icon" />
-            </a>
+          </div>
+          {statusText !== '' && (
+            <div className="status-text">{`- ${statusText}`}</div>
           )}
         </div>
       </div>
@@ -75,4 +99,13 @@ Header.defaultProps = {
   statusText: '',
 };
 
-export default Header;
+const mapStateToProps = state => ({
+  isFetching: state.project.isFetching,
+  currentLot: state.project.selected_lot,
+})
+
+const mapDispatchToProps = dispatch => ({
+  onUpdate: (iLot, title) => { return dispatch(selectLot(iLot, title)) }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
