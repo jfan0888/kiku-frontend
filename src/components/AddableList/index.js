@@ -18,55 +18,55 @@ const AddableList = ({
   closeInput,
   handleAddWriter,
 }) => (
-  <div className="addable-list-wrapper">
-    <ReactTooltip id="addButton" type="dark" place="top" effect="solid">
-      <span>Press the + symbol to add lyrics, audio files, and cowriters!</span>
-    </ReactTooltip>
+    <div className="addable-list-wrapper">
+      <ReactTooltip id="addButton" type="dark" place="top" effect="solid">
+        <span>Press the + symbol to add lyrics, audio files, and cowriters!</span>
+      </ReactTooltip>
 
-    <div className="addable-list">
-      <div className="addable-list__header">
-        <span>{title}</span>
-        {!readOnly && (
-          <a
-            className="add-btn"
-            data-tip
-            data-for="addButton"
-            onClick={clickHandler}
-          >
-            <img alt="add icon" src={addIcon} />
-          </a>
-        )}
-      </div>
-      {data.length ? (
-        <ul className="addable-list__content">
-          {data.map((item, index) =>
-            coWriter ? (
-              <li
-                className="content-item"
-                key={`filteredItem-${index}`}
-                style={{ border: 'none' }}
-              >
-                {item.imageUrl && <img alt={item.name} src={item.imageUrl} />}
-                {item.name}
-              </li>
-            ) : (
-              <li key={`${title}_${index}`}>{item}</li>
-            )
+      <div className="addable-list">
+        <div className="addable-list__header">
+          <span>{title}</span>
+          {!readOnly && (
+            <a
+              className="add-btn"
+              data-tip
+              data-for="addButton"
+              onClick={clickHandler}
+            >
+              <img alt="add icon" src={addIcon} />
+            </a>
           )}
-        </ul>
-      ) : null}
-      {children}
-    </div>
+        </div>
+        {data && data.length ? (
+          <ul className="addable-list__content">
+            {data.map((item, index) =>
+              coWriter ? (
+                <li
+                  className="content-item"
+                  key={`filteredItem-${index}`}
+                  style={{ border: 'none' }}
+                >
+                  {item.imageUrl && <img alt={item.name} src={item.imageUrl} />}
+                  {item.name}
+                </li>
+              ) : (
+                  <li key={`${title}_${index}`}>{item}</li>
+                )
+            )}
+          </ul>
+        ) : null}
+        {children}
+      </div>
 
-    {coWriter && visibleList && (
-      <SearchInput
-        data={listData}
-        closeInput={closeInput}
-        handleAddWriter={handleAddWriter}
-      />
-    )}
-  </div>
-);
+      {coWriter && visibleList && (
+        <SearchInput
+          data={listData}
+          closeInput={closeInput}
+          handleAddWriter={handleAddWriter}
+        />
+      )}
+    </div>
+  );
 
 AddableList.propTypes = {
   title: PropTypes.string,
@@ -86,8 +86,8 @@ AddableList.defaultProps = {
   readOnly: false,
   coWriter: false,
   visibleList: false,
-  closeInput: () => {},
-  handleAddWriter: () => {},
+  closeInput: () => { },
+  handleAddWriter: () => { },
 };
 
 export default AddableList;

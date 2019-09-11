@@ -32,6 +32,8 @@ class SearchInput extends React.Component {
     const { data } = this.props;
     const { filterText } = this.state;
 
+    console.log('addable list data', data);
+
     return (
       <div ref={node => (this.node = node)} className="search-input-container">
         <div className="input-wrapper">
@@ -52,19 +54,19 @@ class SearchInput extends React.Component {
         <div className="search-input__content">
           {data &&
             data
-              .filter(item =>
-                item.name.toLowerCase().includes(filterText.toLowerCase())
+              .filter(({ owner }) =>
+                owner.name.toLowerCase().includes(filterText.toLowerCase())
               )
-              .map(({ id, name, imageUrl }) => (
+              .map(({ id, owner }) => (
                 <div
                   className="content-item"
                   key={`filteredItem-${id}`}
                   onClick={() =>
-                    this.props.handleAddWriter({ id, name, imageUrl })
+                    this.props.handleAddWriter({ id, name: owner.name, imageUrl: owner.icon })
                   }
                 >
-                  {imageUrl && <img alt={name} src={imageUrl} />}
-                  {name}
+                  {owner && <img alt={owner.name} src={owner.icon} />}
+                  {owner.name}
                 </div>
               ))}
         </div>
