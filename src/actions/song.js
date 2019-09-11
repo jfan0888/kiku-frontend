@@ -1,5 +1,3 @@
-import * as API from '../api';
-
 import {
   GET_SONG_REQUEST,
   GET_SONG_SUCCESS,
@@ -13,7 +11,7 @@ export const getSongById = songId => async dispatch => {
   try {
     dispatch({ type: GET_SONG_REQUEST });
 
-    const { data } = await API.getSongById(songId);
+    const data = {};
 
     dispatch({ type: GET_SONG_SUCCESS, data });
   } catch (error) {
