@@ -1,26 +1,42 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Avatar from 'react-avatar';
 
 import { GeneralView, CustomInput } from '../../components';
 import './styles.scss';
-
-const userAvatar = require('../../assets/users/user-01.png');
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       userInfo: {
-        firstName: 'Mike',
-        lastName: 'Willis',
-        email: 'mike.willis@gmail.com',
-        password: 'password',
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
         ascap: 'ASCAP',
-        phoneNumber: '+447399840987',
+        phoneNumber: '',
       },
-      profileImage: userAvatar,
+      profileImage: '',
     };
     this.avatarInput = React.createRef();
+  }
+
+  componentDidMount() {
+    const { isFetching, user } = this.props;
+    if (!isFetching && user) {
+      this.setState({
+        userInfo: {
+          firstName: user.name,
+          lastName: user.profile_display_name,
+          email: user.email,
+          password: '*****',
+          ascap: 'ASCAP',
+          phoneNumber: '+447399840987',
+        },
+        profileImage: user.picture,
+      })
+    }
   }
 
   uploadAvatar = () => {
@@ -101,4 +117,9 @@ class Profile extends React.Component {
   }
 }
 
-export default Profile;
+const mapStateToProps = state => ({
+  isFetching: state.user.isFetching,
+  user: state.user.data,
+})
+
+export default connect(mapStateToProps, null)(Profile);
