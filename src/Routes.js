@@ -8,14 +8,14 @@ import {
 } from './containers';
 
 const Routes = [
-  {
-    title: 'signin',
-    pageLink: '/',
-    component: SignIn,
-  },
+  // {
+  //   title: 'signin',
+  //   pageLink: '/',
+  //   component: SignIn,
+  // },
   {
     title: 'profile',
-    pageLink: '/my-profile',
+    pageLink: '/',
     component: Profile,
     bottomNavItem: true,
   },
