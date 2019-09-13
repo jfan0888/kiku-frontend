@@ -4,10 +4,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ContentEditable from 'react-contenteditable'
 
-import {
-  selectLot,
-} from '../../redux/reducers/actions';
-
 import './styles.scss';
 
 const logoIcon = require('../../assets/images/kiku-logo.png');
@@ -104,8 +100,4 @@ const mapStateToProps = state => ({
   currentLot: state.project.selected_lot,
 })
 
-const mapDispatchToProps = dispatch => ({
-  onUpdate: (iLot, title) => { return dispatch(selectLot(iLot, title)) }
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, null)(Header);
