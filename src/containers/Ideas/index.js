@@ -38,9 +38,9 @@ class Ideas extends React.Component {
 
     Object.keys(ideas).forEach(itemKey => {
       const songItem = ideas[itemKey];
-      const profiles = songItem.profiles;
+      const itemClass = songItem.class;
 
-      if (Array.isArray(profiles) && !profiles.length) {
+      if (itemClass === 'custom') {
         newList.push(songItem);
       }
     });

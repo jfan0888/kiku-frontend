@@ -15,16 +15,30 @@ class Complete extends React.Component {
   componentDidMount() {
     const { isFetching, songsData } = this.props;
     if (!isFetching && songsData) {
-      const newList = [];
-
-      Object.keys(songsData).forEach(itemKey => {
-        newList.push(songsData[itemKey]);
-      })
-
-      this.setState({
-        completedData: newList
-      })
+      this.updateList(this.props);
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { isFetching, songsData } = nextProps;
+    if (!isFetching && songsData !== this.props.songsData) {
+      this.updateList(nextProps);
+    }
+  }
+
+  updateList = ({ songsData }) => {
+    const newList = [];
+
+    Object.keys(songsData).forEach(itemKey => {
+      const songItem = songsData[itemKey];
+      const itemClass = songItem.class;
+
+      if (itemClass === 'friends') {
+        newList.push(songItem);
+      }
+    });
+
+    this.setState({ completedData: newList });
   }
 
   render() {
